@@ -1,4 +1,4 @@
-# Choi Meng Yew — Portfolio
+# Portfolio Website
 
 Personal portfolio site. Built with React + Vite, deployed via GitHub Pages.
 
