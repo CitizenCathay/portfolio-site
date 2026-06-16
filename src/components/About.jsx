@@ -8,15 +8,14 @@ const SKILLS = [
   { name: 'CUDA',         icon: 'https://cdn.simpleicons.org/nvidia/76b900'    },
   { name: 'OpenGL',       icon: 'devicon-opengl-plain'                         },
   { name: 'GLSL',         icon: 'devicon-opengl-plain'                         },
-  { name: 'WebGPU',       icon: 'devicon-webgpu-plain'                         },
-  { name: 'WebAssembly', icon: 'devicon-wasm-plain' },
   { name: 'OpenCL',       icon: 'devicon-opencl-plain'                         },
+  { name: 'Network Programming', icon: 'devicon-windows8-plain'                },
 
   // Familiar
   { name: 'Python',       icon: 'devicon-python-plain'                         },
   { name: 'PyTorch',      icon: 'devicon-pytorch-original'                     },
   { name: 'CMake',        icon: 'devicon-cmake-plain'                          },
-  { name: 'GitHub',  icon: 'devicon-github-plain'                              },
+  { name: 'GitHub',       icon: 'devicon-github-plain'                         },
   { name: 'Git',          icon: 'devicon-git-plain'                            },
   { name: 'Linux',        icon: 'devicon-linux-plain'                          },
   { name: 'Ubuntu',       icon: 'devicon-ubuntu-plain'                         },
@@ -31,6 +30,8 @@ const SKILLS = [
   { name: 'TypeScript',   icon: 'devicon-typescript-plain'                     },
   { name: 'React',        icon: 'devicon-react-original'                       },
   { name: 'Three.js',     icon: 'devicon-threejs-original'                     },
+  { name: 'WebGL', icon: 'https://cdn.simpleicons.org/webgl/990000'            },
+  { name: 'WebGPU',       icon: 'devicon-webgpu-plain'                         },
 ];
 
 function SkillPill({ name, icon }) {
@@ -56,7 +57,10 @@ function SkillPill({ name, icon }) {
         transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
         cursor: 'default',
       }}>
-      <i className={`${icon} colored`} style={{ fontSize: hovered ? 18 : 16, transition: 'font-size 0.2s' }}/>
+      {icon.startsWith('http')
+        ? <img src={icon} style={{ width: hovered ? 18 : 16, height: hovered ? 18 : 16, transition: 'all 0.2s' }}/>
+        : <i className={`${icon} colored`} style={{ fontSize: hovered ? 18 : 16, transition: 'font-size 0.2s' }}/>
+      }
       {name}
     </div>
   );

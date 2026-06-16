@@ -1,7 +1,9 @@
+import { useState, useEffect } from 'react';
+
 const PROJECTS = [
   {
     title: 'Grape Engine',
-    role: 'GPU Lead · Completed',
+    role: 'GPU & Tools Programmer · Completed',
     year: 'Sep 2025 — Apr 2026',
     summary: 'A C++17 game engine featuring a custom OpenGL renderer, Entity Component System architecture, and CUDA-accelerated GPU subsystems.',
     description: 'Built a custom game engine to explore software architecture, real-time rendering and GPU acceleration. The engine includes an Entity Component System-based runtime, OpenGL 4.5 rendering, editor tooling, GPU object picking, and CUDA–OpenGL interoperability for simulation systems.',
@@ -13,8 +15,8 @@ const PROJECTS = [
     ],
     stack: ['C++17', 'OpenGL 4.5', 'CUDA', 'CUDA–OpenGL Interop', 'GLSL', 'ImGui', 'RenderDoc'],
     links: [
-      { label: 'Repository', href: 'https://github.com/Chaotic-Grapes/GrapeEngine',         icon: 'devicon-github-plain'  },
-      { label: 'Video Demo',  href: 'https://youtube.com/',                                 icon: 'youtube'               },
+      { label: 'Repository', href: 'https://github.com/Chaotic-Grapes/GrapeEngine', icon: 'devicon-github-plain' },
+      { label: 'Video Demo',  href: 'https://youtube.com/',                          icon: 'youtube'              },
     ],
   },
   {
@@ -31,16 +33,16 @@ const PROJECTS = [
     ],
     stack: ['C++', 'OpenGL', 'GLSL'],
     links: [
-      { label: 'Repository', href: 'https://github.com/Chaotic-Grapes/EchoesBelow',   icon: 'devicon-github-plain' },
-      { label: 'Video Demo',  href: 'https://youtube.com/',                           icon: 'youtube'              },
+      { label: 'Repository', href: 'https://github.com/Chaotic-Grapes/EchoesBelow', icon: 'devicon-github-plain' },
+      { label: 'Video Demo',  href: 'https://youtube.com/',                          icon: 'youtube'              },
     ],
   },
   {
     title: 'Astral Siege',
     role: 'Systems & Gameplay Programmer · Completed',
     year: 'Jan 2025 — Apr 2025',
-    summary: 'A 2D tower defense game featuring a custom gravity system built using discrete vector fields and real-time physics simulation.',
-    description: 'Developed gameplay and simulation systems for Astral Siege — a 2D tower defense built in DigiPen\'s Alpha Engine where gravity fields shape projectile trajectories and entity behavior.',
+    summary: 'A 2D tower defense game where gravity bends everything — bullets curve around planets, particles spiral into gravity wells, and missiles must be aimed with the pull of the field in mind.',
+    description: 'Designed and implemented a custom gravity system built using discrete vector fields that influence projectile trajectories, particle motion, and weapon behaviour in real time. Responsible for the physics simulation, projectile system and rendering.',
     keyFeatures: [
       'Implemented a discrete 2D vector field to model non-uniform gravitational forces.',
       'Applied per-cell acceleration sampling to influence projectile trajectories and entity movement.',
@@ -49,11 +51,21 @@ const PROJECTS = [
     ],
     stack: ['C++', 'Game Physics', 'Object-Oriented Design'],
     links: [
-      { label: 'Repository', href: 'https://github.com/',  icon: 'devicon-github-plain' },
-      { label: 'Video Demo',  href: 'https://youtube.com/', icon: 'youtube'              },
+      { label: 'Repository', href: 'https://github.com/', icon: 'devicon-github-plain' },
+      { label: 'Video Demo',  href: 'https://youtube.com/', icon: 'youtube'             },
     ],
   },
 ];
+
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const fn = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', fn);
+    return () => window.removeEventListener('resize', fn);
+  }, []);
+  return width;
+}
 
 function GlassLink({ href, label, icon }) {
   const isYoutube = icon === 'youtube';
@@ -99,25 +111,26 @@ function GlassLink({ href, label, icon }) {
   );
 }
 
-function ProjectCard({ project, index, last }) {
+function ProjectCard({ project, last, isMobile }) {
   return (
     <article style={{
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: 48,
-      paddingTop: 48, paddingBottom: 48,
+      gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+      gap: isMobile ? 24 : 48,
+      paddingTop: isMobile ? 36 : 48,
+      paddingBottom: isMobile ? 36 : 48,
       borderBottom: last ? 'none' : '1px solid var(--border)',
       alignItems: 'start',
     }}>
-      {/* Left column — title, meta, stack, link */}
-      <div style={{ position: 'sticky', top: 80 }}>
+      {/* Left column — title, meta, stack, links */}
+      <div style={{ position: isMobile ? 'static' : 'sticky', top: 80 }}>
         <div style={{
           display: 'flex', justifyContent: 'space-between',
           alignItems: 'baseline', flexWrap: 'wrap', gap: 8,
           marginBottom: 8,
         }}>
           <h3 style={{
-            fontSize: 24, fontWeight: 500,
+            fontSize: isMobile ? 20 : 24, fontWeight: 500,
             letterSpacing: '-0.025em', color: 'var(--text)',
           }}>
             {project.title}
@@ -132,20 +145,20 @@ function ProjectCard({ project, index, last }) {
 
         <div style={{
           fontSize: 13, color: 'var(--text-muted)',
-          marginBottom: 20,
+          marginBottom: 16,
         }}>
           {project.role}
         </div>
 
         <p style={{
           fontSize: 15, lineHeight: 1.6,
-          color: 'var(--text)', marginBottom: 28,
+          color: 'var(--text)', marginBottom: 20,
         }}>
           {project.summary}
         </p>
 
         {/* Stack */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 28 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 20 }}>
           {project.stack.map(s => (
             <span key={s} style={{
               fontFamily: 'var(--font-mono)', fontSize: 11,
@@ -166,7 +179,7 @@ function ProjectCard({ project, index, last }) {
       </div>
 
       {/* Right column — description + key features */}
-      <div>
+      <div style={{ marginTop: isMobile ? 8 : 0 }}>
         <div style={{
           fontFamily: 'var(--font-mono)', fontSize: 11,
           color: 'var(--text-dim)', textTransform: 'uppercase',
@@ -176,7 +189,7 @@ function ProjectCard({ project, index, last }) {
         </div>
         <p style={{
           fontSize: 14, lineHeight: 1.75,
-          color: 'var(--text-muted)', marginBottom: 32,
+          color: 'var(--text-muted)', marginBottom: 28,
         }}>
           {project.description}
         </p>
@@ -208,27 +221,25 @@ function ProjectCard({ project, index, last }) {
   );
 }
 
-function SectionLabel({ children }) {
-  return (
-    <div style={{
-      fontFamily: 'var(--font-mono)', fontSize: 11,
-      color: 'var(--text-dim)', textTransform: 'uppercase',
-      letterSpacing: '0.08em', marginBottom: 10,
-    }}>
-      {children}
-    </div>
-  );
-}
-
 export default function Projects() {
+  const width = useWindowWidth();
+  const isMobile = width < 700;
+
   return (
     <section id="projects" style={{
-      maxWidth: 1080, margin: '0 auto', padding: '48px 32px',
+      maxWidth: 1080, margin: '0 auto',
+      padding: isMobile ? '48px 20px' : '48px 32px',
     }}>
       <SectionHeader label="Projects" />
       <div>
         {PROJECTS.map((p, i) => (
-          <ProjectCard key={p.title} project={p} index={i} last={i === PROJECTS.length - 1} />
+          <ProjectCard
+            key={p.title}
+            project={p}
+            index={i}
+            last={i === PROJECTS.length - 1}
+            isMobile={isMobile}
+          />
         ))}
       </div>
     </section>

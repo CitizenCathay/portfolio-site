@@ -1,33 +1,47 @@
+import { useState, useEffect } from 'react';
 import { SectionHeader } from './Projects';
 
 const EXPERIENCE = [
-    {
+  {
     role: 'Teaching Assistant',
     company: 'DigiPen Institute of Technology',
     period: 'Jan 2025 — Present',
     bullets: [
-        'Served as Teaching Assistant for the modules: High Level Programming I & II, Software Engineering Project I & II, and Computer Environment.',
-        'Held office hours at the Academic Support Center and reviewed code submissions, providing feedback on correctness, style, and software engineering practices.',
-        'Supported students in C and C++ programming, covering memory management, data structures, object-oriented design, and compiler behaviour.',
-        'Conducted one-on-one sessions with students to work through code, debug problems, and clarify theoretical concepts.',
+      'Served as Teaching Assistant for the modules: High Level Programming I & II, Software Engineering Project I & II, and Computer Environment.',
+      'Held office hours at the Academic Support Center and reviewed code submissions, providing feedback on correctness, style, and software engineering practices.',
+      'Supported students in C and C++ programming, covering memory management, data structures, object-oriented design, and compiler behaviour.',
+      'Conducted one-on-one sessions with students to work through code, debug problems, and clarify theoretical concepts.',
     ],
-    },
-  // add more entries here
+  },
 ];
 
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const fn = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', fn);
+    return () => window.removeEventListener('resize', fn);
+  }, []);
+  return width;
+}
+
 export default function Experience() {
+  const width = useWindowWidth();
+  const isMobile = width < 700;
+
   return (
     <section id="experience" style={{
-      maxWidth: 1080, margin: '0 auto', padding: '80px 32px',
+      maxWidth: 1080, margin: '0 auto',
+      padding: isMobile ? '80px 20px' : '80px 32px',
     }}>
-    <SectionHeader label="Experience" />
+      <SectionHeader label="Experience" />
 
       <div style={{ paddingTop: 56 }}>
         {EXPERIENCE.map((e, i) => (
           <div key={i} style={{
             display: 'grid',
-            gridTemplateColumns: '200px 1fr',
-            gap: 32,
+            gridTemplateColumns: isMobile ? '1fr' : '200px 1fr',
+            gap: isMobile ? 8 : 32,
             paddingBottom: 48,
             marginBottom: 48,
             borderBottom: i === EXPERIENCE.length - 1 ? 'none' : '1px solid var(--border)',
@@ -45,6 +59,7 @@ export default function Experience() {
               <div style={{
                 fontSize: 16, fontWeight: 500, color: 'var(--text)',
                 marginBottom: 4, letterSpacing: '-0.01em',
+                marginTop: isMobile ? 4 : 0,
               }}>
                 {e.role}
               </div>
