@@ -51,8 +51,8 @@ const PROJECTS = [
     ],
     stack: ['C++', 'Game Physics', 'Object-Oriented Design'],
     links: [
-      { label: 'Repository', href: 'https://github.com/', icon: 'devicon-github-plain' },
-      { label: 'Video Demo',  href: 'https://youtube.com/', icon: 'youtube'             },
+      { label: 'Repository',  href: 'https://github.com/CitizenCathay/astral-siege',  icon: 'devicon-github-plain' },
+      { label: 'Video Demo',  href: 'https://youtube.com/',                           icon: 'youtube'             },
     ],
   },
 ];
