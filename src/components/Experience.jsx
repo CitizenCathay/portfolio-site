@@ -31,6 +31,12 @@ const TIMELINE = [
     org: 'SIT – DigiPen Institute of Technology Singapore',
     tags: ['Algorithms', 'Physics simulation', 'AI systems', 'Software architecture'],
   },
+  {
+    status: 'past',
+    date: 'Apr 2020 — May 2024',
+    title: 'Diploma in Electrical Engineering',
+    org: 'Ngee Ann Polytechnic',
+  },
 ];
 
 const ease = [0.16, 1, 0.3, 1];
