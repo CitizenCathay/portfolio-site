@@ -1,274 +1,223 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowUpRight, ChevronDown, Play } from 'lucide-react';
+import { GitHubIcon } from './Icons';
+import { useSketch } from '../sketches/useSketch';
+import { createUnderwater } from '../sketches/underwater';
+import { createGravity } from '../sketches/gravity';
+import grapeEngine1 from '../assets/projects/grape-engine-1.jpg';
+import grapeEngine2 from '../assets/projects/grape-engine-2.jpg';
+import tradeflowTrade from '../assets/projects/tradeflow-trade.jpg';
+import tradeflowMarkets from '../assets/projects/tradeflow-markets.jpg';
+import tradeflowPortfolio from '../assets/projects/tradeflow-portfolio.jpg';
 
+// media.type: 'gallery' | 'video' | 'sketch'
+// To show real footage, swap a project's media for:
+//   { type: 'video', src: clip, poster: still }   (import the .mp4/.webm like the images)
 const PROJECTS = [
   {
+    id: 'grape-engine',
     title: 'Grape Engine',
-    role: 'GPU & Tools Programmer · Completed',
-    year: 'Sep 2025 — Apr 2026',
-    summary: 'A C++17 game engine featuring a custom OpenGL renderer, Entity Component System architecture, and CUDA-accelerated GPU subsystems.',
-    description: 'Built a custom game engine to explore software architecture, real-time rendering and GPU acceleration. The engine includes an Entity Component System-based runtime, OpenGL 4.5 rendering, editor tooling, GPU object picking, and CUDA–OpenGL interoperability for simulation systems.',
-    keyFeatures: [
+    tagline: 'C++17 engine with a custom OpenGL renderer, ECS runtime and CUDA-accelerated simulation.',
+    role: 'GPU & tools programmer',
+    year: '2025 — 26',
+    metrics: [
+      { value: '500K+', label: 'boids at 60 fps' },
+      { value: '100×', label: 'scale-up via GPU neighbour queries' },
+      { value: 'Async', label: 'GPU picking, no frame stalls' },
+    ],
+    stack: ['C++17', 'OpenGL 4.5', 'CUDA', 'GLSL', 'ImGui', 'RenderDoc'],
+    media: { type: 'gallery', images: [grapeEngine1, grapeEngine2], badge: 'Engine editor', position: '40% center' },
+    repo: 'https://github.com/Chaotic-Grapes/GrapeEngine',
+    details: [
       'OpenGL 4.5 renderer with MRT/FBO support, layer-sorted rendering, and GLSL shader support.',
       'CUDA–OpenGL interop systems for GPU-accelerated particles and flocking simulations.',
       'Scaled boids simulation from ~5,000 to over 500,000 agents while maintaining 60 FPS by parallelizing neighbour queries across the GPU.',
       'Async PBO readback for GPU object picking without stalling the frame.',
     ],
-    stack: ['C++17', 'OpenGL 4.5', 'CUDA', 'CUDA–OpenGL Interop', 'GLSL', 'ImGui', 'RenderDoc'],
-    links: [
-      { label: 'Repository', href: 'https://github.com/Chaotic-Grapes/GrapeEngine', icon: 'devicon-github-plain' },
-      { label: 'Video Demo',  href: 'https://youtube.com/',                          icon: 'youtube'              },
-    ],
   },
   {
+    id: 'echoes-below',
     title: 'Echoes Below',
-    role: 'Graphics & GPU Programmer · Completed',
-    year: 'Sep 2025 - Apr 2026',
-    summary: 'A 2D underwater puzzle platformer where players navigate flooded environments — built around atmospheric rendering, shader-driven visuals, and real-time lighting to sell the feeling of being submerged.',
-    description: 'Architected and implemented all rendering systems for a student team game project, authoring the shader stack, lighting systems, and post-processing passes from scratch to achieve a distinct underwater visual atmosphere.',
-    keyFeatures: [
+    tagline: 'Underwater puzzle platformer. I wrote every shader, light and post pass.',
+    role: 'Graphics & GPU programmer',
+    year: '2025 — 26',
+    metrics: [
+      { value: 'PBR', label: 'Cook–Torrance, GGX, Smith' },
+      { value: 'HDR', label: 'bloom → tone map → gamma' },
+      { value: 'SDF', label: 'resolution-independent UI' },
+    ],
+    stack: ['C++', 'OpenGL', 'GLSL', 'SSBO'],
+    media: { type: 'sketch', sketch: createUnderwater, badge: 'Live sketch · move cursor = light', stat: () => 'caustics · SDF normals · GGX · ACES' },
+    repo: 'https://github.com/Chaotic-Grapes/EchoesBelow',
+    details: [
       'Cook–Torrance PBR pipeline (GGX NDF, Smith geometry, Fresnel-Schlick) with normal maps, MRA maps, and emissive mask support.',
       'SDF rendering for resolution-independent UI text and geometry.',
       'SSBO-driven dynamic point light system with smooth distance attenuation.',
-      'Built a multi-stage post-processing pipeline — HDR rendering, bloom, tone mapping, and gamma correction across chained off-screen passes.',
-    ],
-    stack: ['C++', 'OpenGL', 'GLSL'],
-    links: [
-      { label: 'Repository', href: 'https://github.com/Chaotic-Grapes/EchoesBelow', icon: 'devicon-github-plain' },
-      { label: 'Video Demo',  href: 'https://youtube.com/',                          icon: 'youtube'              },
+      'Multi-stage post-processing pipeline — HDR rendering, bloom, tone mapping, and gamma correction across chained off-screen passes.',
     ],
   },
   {
-    title: 'Astral Siege',
-    role: 'Systems & Gameplay Programmer · Completed',
-    year: 'Jan 2025 — Apr 2025',
-    summary: 'A 2D tower defense game where gravity bends everything — bullets curve around planets, particles spiral into gravity wells, and missiles must be aimed with the pull of the field in mind.',
-    description: 'Designed and implemented a custom gravity system built using discrete vector fields that influence projectile trajectories, particle motion, and weapon behaviour in real time. Responsible for the physics simulation, projectile system and rendering.',
-    keyFeatures: [
-      'Implemented a discrete 2D vector field to model non-uniform gravitational forces.',
-      'Applied per-cell acceleration sampling to influence projectile trajectories and entity movement.',
-      'O(1) vector field lookup via grid-indexed sampling — avoids iterating all cells per entity per frame.',
-      'Used object-oriented design patterns to support configurable enemy and entity creation.',
+    id: 'tradeflow',
+    title: 'TradeFlow',
+    tagline: 'Paper-trading exchange in native C++. Hand-rolled HTTP server, limit order book, SQLite persistence.',
+    role: 'Systems & networking',
+    year: '2026',
+    metrics: [
+      { value: '8.8×', label: 'order throughput after profiling' },
+      { value: '1.9 ms', label: 'p50 order latency, durable commits' },
+      { value: '25×', label: 'matching speed-up, in-memory' },
     ],
-    stack: ['C++', 'Game Physics', 'Object-Oriented Design'],
-    links: [
-      { label: 'Repository',  href: 'https://github.com/CitizenCathay/astral-siege',  icon: 'devicon-github-plain' },
-      { label: 'Video Demo',  href: 'https://youtube.com/',                           icon: 'youtube'             },
+    stack: ['C++20', 'Winsock', 'SQLite', 'JWT', 'CMake', 'vcpkg'],
+    media: {
+      type: 'gallery',
+      images: [tradeflowTrade, tradeflowMarkets, tradeflowPortfolio],
+      position: 'left top',
+    },
+    repo: 'https://github.com/CitizenCathay/CSD2161-Trading-System',
+    details: [
+      'HTTP/1.1 server written directly on Winsock: request parsing, routing and a thread per client connection.',
+      'Limit order book with price/time priority; cash, holdings, order status and the trade record settle in one SQLite transaction.',
+      'JWT sessions and PBKDF2 password hashing (100k iterations).',
+      'Profiled the matching path: an index on the order book took on-disk throughput from 52.5 to 462.5 orders/s and worst-case latency from 402 ms to 16.2 ms.',
+      '34-check correctness suite guards every performance change, plus benchmarks for lock contention and HTTP concurrency.',
+    ],
+  },
+  {
+    id: 'astral-siege',
+    title: 'Astral Siege',
+    tagline: 'Tower defense where gravity bends every shot.',
+    role: 'Systems & gameplay programmer',
+    year: '2025',
+    metrics: [
+      { value: 'O(1)', label: 'field lookup per entity' },
+      { value: '2D', label: 'discrete vector-field gravity' },
+    ],
+    stack: ['C++', 'Game physics', 'OOP'],
+    media: {
+      type: 'sketch', sketch: createGravity, badge: 'Live sketch · hover to add a well',
+      stat: (s) => (s ? `${s.shots} shots · ${s.cells} cells` : 'vector field'),
+    },
+    repo: 'https://github.com/CitizenCathay/astral-siege',
+    details: [
+      'Discrete 2D vector field models non-uniform gravitational forces.',
+      'Per-cell acceleration sampling drives projectile trajectories and entity movement.',
+      'O(1) grid-indexed lookup — no iterating every cell per entity per frame.',
+      'Object-oriented design patterns for configurable enemy and entity creation.',
     ],
   },
 ];
 
-function useWindowWidth() {
-  const [width, setWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    const fn = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', fn);
-    return () => window.removeEventListener('resize', fn);
-  }, []);
-  return width;
-}
-
-function GlassLink({ href, label, icon }) {
-  const isYoutube = icon === 'youtube';
+function Gallery({ images, title, badge, position = 'center' }) {
+  const [i, setI] = useState(0);
   return (
-    <a href={href} target="_blank" rel="noreferrer"
-      style={{
-        display: 'inline-flex', alignItems: 'center', gap: 8,
-        padding: '8px 16px', borderRadius: 999,
-        fontSize: 13, color: 'var(--text)',
-        textDecoration: 'none', position: 'relative', overflow: 'hidden',
-        boxShadow: '0 2px 12px rgba(0,0,0,0.06), inset 2px 2px 1px rgba(255,255,255,0.7), inset -1px -1px 1px rgba(255,255,255,0.4)',
-        transition: 'box-shadow 0.2s, transform 0.2s',
-      }}
-      onMouseEnter={e => {
-        e.currentTarget.style.transform = 'scale(1.03)';
-        e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.10), inset 2px 2px 1px rgba(255,255,255,0.8), inset -1px -1px 1px rgba(255,255,255,0.5)';
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.transform = 'scale(1)';
-        e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.06), inset 2px 2px 1px rgba(255,255,255,0.7), inset -1px -1px 1px rgba(255,255,255,0.4)';
-      }}>
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 0,
-        backdropFilter: 'blur(10px) saturate(160%)',
-        WebkitBackdropFilter: 'blur(10px) saturate(160%)',
-        borderRadius: 999,
-      }}/>
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 1,
-        background: 'rgba(255,255,255,0.35)',
-        borderRadius: 999,
-        border: '1px solid rgba(255,255,255,0.6)',
-      }}/>
-      {isYoutube ? (
-        <svg viewBox="0 0 24 24" style={{ width: 15, height: 15, position: 'relative', zIndex: 2, fill: '#FF0000' }}>
-          <path d="M23.5 6.2s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.8 2 12 2 12 2s-4.8 0-7.3.1c-.6.1-1.9.1-3 1.3C.8 4.2.5 6.2.5 6.2S.2 8.5.2 10.8v2.1c0 2.3.3 4.6.3 4.6s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.7 12 21.8 12 21.8s4.8 0 7.3-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.3.3-4.6v-2.1c0-2.3-.3-4.6-.3-4.6zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/>
-        </svg>
-      ) : (
-        <i className={icon} style={{ fontSize: 15, position: 'relative', zIndex: 2 }}/>
+    <div>
+      <div className="project__media">
+        <a href={images[i]} target="_blank" rel="noreferrer" aria-label={`Open ${title} screenshot full size`}>
+          <img src={images[i]} alt={`${title} screenshot ${i + 1}`} loading="lazy" style={{ objectPosition: position }} />
+        </a>
+        {badge && <span className="chip media__badge">{badge}</span>}
+      </div>
+      {images.length > 1 && (
+        <div className="gallery__thumbs">
+          {images.map((src, k) => (
+            <button key={k} className="gallery__thumb" aria-current={k === i} aria-label={`Screenshot ${k + 1}`} onClick={() => setI(k)}>
+              <img src={src} alt="" loading="lazy" />
+            </button>
+          ))}
+        </div>
       )}
-      <span style={{ position: 'relative', zIndex: 2 }}>{label}</span>
-    </a>
+    </div>
   );
 }
 
-function ProjectCard({ project, last, isMobile }) {
+function Sketch({ media }) {
+  const [stats, setStats] = useState(null);
+  const ref = useSketch((canvas) => media.sketch(canvas, { onStats: setStats }));
   return (
-    <article style={{
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-      gap: isMobile ? 24 : 48,
-      paddingTop: isMobile ? 36 : 48,
-      paddingBottom: isMobile ? 36 : 48,
-      borderBottom: last ? 'none' : '1px solid var(--border)',
-      alignItems: 'start',
-    }}>
-      {/* Left column — title, meta, stack, links */}
-      <div style={{ position: isMobile ? 'static' : 'sticky', top: 80 }}>
-        <div style={{
-          display: 'flex', justifyContent: 'space-between',
-          alignItems: 'baseline', flexWrap: 'wrap', gap: 8,
-          marginBottom: 8,
-        }}>
-          <h3 style={{
-            fontSize: isMobile ? 20 : 24, fontWeight: 500,
-            letterSpacing: '-0.025em', color: 'var(--text)',
-          }}>
-            {project.title}
-          </h3>
-          <span style={{
-            fontFamily: 'var(--font-mono)', fontSize: 12,
-            color: 'var(--text-dim)',
-          }}>
-            {project.year}
-          </span>
+    <>
+      <canvas ref={ref} aria-label={media.badge} />
+      <span className="chip media__badge"><span className="live-dot" /> {media.badge}</span>
+      <span className="chip media__stat">{media.stat(stats)}</span>
+    </>
+  );
+}
+
+function Media({ project }) {
+  const { media } = project;
+  return (
+    <div className="project__visual">
+      {media.type === 'gallery' && <Gallery {...media} title={project.title} />}
+      {media.type === 'sketch' && <div className="project__media"><Sketch media={media} /></div>}
+      {media.type === 'video' && (
+        <div className="project__media">
+          <video src={media.src} poster={media.poster} autoPlay muted loop playsInline />
         </div>
+      )}
+    </div>
+  );
+}
 
-        <div style={{
-          fontSize: 13, color: 'var(--text-muted)',
-          marginBottom: 16,
-        }}>
-          {project.role}
+const reveal = {
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' },
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+};
+
+function Project({ project, index }) {
+  return (
+    <motion.article id={project.id} className={`project ${index % 2 ? 'project--flip' : ''}`} {...reveal}>
+      <Media project={project} />
+      <div className="project__info">
+        <div className="project__index">
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <span>{project.role} · {project.year}</span>
         </div>
+        <h3 className="project__title">{project.title}</h3>
+        <p className="project__tagline">{project.tagline}</p>
 
-        <p style={{
-          fontSize: 15, lineHeight: 1.6,
-          color: 'var(--text)', marginBottom: 20,
-        }}>
-          {project.summary}
-        </p>
-
-        {/* Stack */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 20 }}>
-          {project.stack.map(s => (
-            <span key={s} style={{
-              fontFamily: 'var(--font-mono)', fontSize: 11,
-              color: 'var(--text-muted)', padding: '3px 8px',
-              border: '1px solid var(--border)', borderRadius: 4,
-            }}>{s}</span>
+        <div className="metrics">
+          {project.metrics.map((m) => (
+            <div className="metric" key={m.label}>
+              <div className="metric__value">{m.value}</div>
+              <div className="metric__label">{m.label}</div>
+            </div>
           ))}
         </div>
 
-        {/* Links */}
-        {project.links?.length > 0 && (
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            {project.links.map(l => (
-              <GlassLink key={l.label} href={l.href} label={l.label} icon={l.icon} />
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Right column — description + key features */}
-      <div style={{ marginTop: isMobile ? 8 : 0 }}>
-        <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: 11,
-          color: 'var(--text-dim)', textTransform: 'uppercase',
-          letterSpacing: '0.08em', marginBottom: 10,
-        }}>
-          Description
+        <div className="stack">
+          {project.stack.map((s) => <span className="chip" key={s}>{s}</span>)}
         </div>
-        <p style={{
-          fontSize: 14, lineHeight: 1.75,
-          color: 'var(--text-muted)', marginBottom: 28,
-        }}>
-          {project.description}
-        </p>
 
-        <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: 11,
-          color: 'var(--text-dim)', textTransform: 'uppercase',
-          letterSpacing: '0.08em', marginBottom: 12,
-        }}>
-          Key features
+        <div className="project__links">
+          <a className="btn" href={project.repo} target="_blank" rel="noreferrer"><GitHubIcon /> Source <ArrowUpRight /></a>
+          {project.demo && (
+            <a className="btn" href={project.demo} target="_blank" rel="noreferrer"><Play /> Demo</a>
+          )}
         </div>
-        <ul style={{ listStyle: 'none', display: 'grid', gap: 10 }}>
-          {project.keyFeatures.map((f, i) => (
-            <li key={i} style={{
-              fontSize: 14, lineHeight: 1.65,
-              color: 'var(--text-muted)',
-              paddingLeft: 18, position: 'relative',
-            }}>
-              <span style={{
-                position: 'absolute', left: 0, top: 10,
-                width: 6, height: 1, background: 'var(--text-faint)',
-              }}/>
-              {f}
-            </li>
-          ))}
-        </ul>
+
+        <details className="details">
+          <summary>How it works <ChevronDown /></summary>
+          <ul>{project.details.map((d) => <li key={d}>{d}</li>)}</ul>
+        </details>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
 export default function Projects() {
-  const width = useWindowWidth();
-  const isMobile = width < 700;
-
   return (
-    <section id="projects" style={{
-      maxWidth: 1080, margin: '0 auto',
-      padding: isMobile ? '48px 20px' : '48px 32px',
-    }}>
-      <SectionHeader label="Projects" />
-      <div>
-        {PROJECTS.map((p, i) => (
-          <ProjectCard
-            key={p.title}
-            project={p}
-            index={i}
-            last={i === PROJECTS.length - 1}
-            isMobile={isMobile}
-          />
-        ))}
+    <section id="work" className="section">
+      <div className="container">
+        <div className="section__head">
+          <h2>Work</h2>
+          <span className="eyebrow">{String(PROJECTS.length).padStart(2, '0')} projects</span>
+        </div>
+        <div className="projects">
+          {PROJECTS.map((p, i) => <Project key={p.id} project={p} index={i} />)}
+        </div>
       </div>
     </section>
-  );
-}
-
-export function SectionHeader({ number, label }) {
-  return (
-    <div style={{
-      display: 'flex', alignItems: 'baseline', gap: 16,
-      marginTop: 32,
-      marginBottom: 8,
-      paddingBottom: 20,
-      borderBottom: '1px solid rgba(0,0,0,0.18)',
-    }}>
-      {number && (
-        <span style={{
-          fontFamily: 'var(--font-mono)', fontSize: 12,
-          color: 'var(--text-faint)',
-        }}>
-          {number}
-        </span>
-      )}
-      <h2 style={{
-        fontSize: 16, fontWeight: 500, color: 'var(--text-dim)',
-        letterSpacing: '0.06em', textTransform: 'uppercase',
-      }}>
-        {label}
-      </h2>
-    </div>
   );
 }
