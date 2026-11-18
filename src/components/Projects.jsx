@@ -1,8 +1,9 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, ChevronDown, Maximize2, Play } from 'lucide-react';
 import { GitHubIcon } from './Icons';
 import Lightbox from './Lightbox';
+import Modal from './Modal';
 import { useSketch } from '../sketches/useSketch';
 import { createUnderwater } from '../sketches/underwater';
 import { createGravity } from '../sketches/gravity';
@@ -231,6 +232,15 @@ const reveal = {
 function Project({ project, index }) {
   return (
     <motion.article id={project.id} className={`project ${index % 2 ? 'project--flip' : ''}`} {...reveal}>
+      <ProjectContent project={project} index={index} />
+    </motion.article>
+  );
+}
+
+// Media + info, shared by the full cards and the details pop-up
+function ProjectContent({ project, index, openDetails = false }) {
+  return (
+    <>
       <Media project={project} />
       <div className="project__info">
         <div className="project__index">
@@ -260,16 +270,78 @@ function Project({ project, index }) {
           )}
         </div>
 
-        <details className="details">
+        <details className="details" open={openDetails}>
           <summary>How it works <ChevronDown /></summary>
           <ul>{project.details.map((d) => <li key={d}>{d}</li>)}</ul>
         </details>
       </div>
-    </motion.article>
+    </>
   );
 }
 
+// Small live preview for a sketch project's compact card
+function MiniSketch({ media }) {
+  const ref = useSketch((canvas) => media.sketch(canvas, {}));
+  return <canvas ref={ref} aria-hidden="true" />;
+}
+
+// Compact card in the "More projects" row; opens the full card in a pop-up
+function MiniProject({ project, index, onOpen }) {
+  const { media } = project;
+  const metric = project.metrics[0];
+  return (
+    <motion.button
+      id={project.id}
+      className="mini"
+      onClick={() => onOpen(project.id)}
+      aria-haspopup="dialog"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.7, delay: (index % 3) * 0.08, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <span className="mini__media">
+        {media.type === 'gallery' && <img src={media.images[0]} alt="" loading="lazy" />}
+        {media.type === 'sketch' && <MiniSketch media={media} />}
+        {media.type === 'sketch' && <span className="chip media__badge"><span className="live-dot" /> Live</span>}
+      </span>
+      <span className="mini__body">
+        <span className="mini__meta"><span className="mini__num">{String(index + 1).padStart(2, '0')}</span> · {project.year}</span>
+        <span className="mini__title">{project.title}</span>
+        <span className="mini__tagline">{project.tagline}</span>
+        <span className="mini__metric">
+          <b>{metric.value}</b> {metric.label}
+        </span>
+        <span className="mini__cta">View details <ArrowUpRight /></span>
+      </span>
+    </motion.button>
+  );
+}
+
+// The first few get full cards; the rest show as a compact "More projects" row
+// (so Contact isn't buried) and open their full card in a pop-up.
+const FEATURED = 3;
+const compactIds = PROJECTS.slice(FEATURED).map((p) => p.id);
+const hashProject = () => {
+  const id = window.location.hash.slice(1);
+  return compactIds.includes(id) ? id : null;
+};
+
 export default function Projects() {
+  const [openId, setOpenId] = useState(hashProject); // a link like #astral-siege opens it
+  const close = useCallback(() => setOpenId(null), []);
+
+  useEffect(() => {
+    const onHash = () => { const id = hashProject(); if (id) setOpenId(id); };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  const featured = PROJECTS.slice(0, FEATURED);
+  const compact = PROJECTS.slice(FEATURED);
+  const openIndex = PROJECTS.findIndex((p) => p.id === openId);
+  const open = openIndex >= 0 ? PROJECTS[openIndex] : null;
+
   return (
     <section id="projects" className="section">
       <div className="container">
@@ -278,9 +350,30 @@ export default function Projects() {
           <span className="eyebrow">{String(PROJECTS.length).padStart(2, '0')} projects</span>
         </div>
         <div className="projects">
-          {PROJECTS.map((p, i) => <Project key={p.id} project={p} index={i} />)}
+          {featured.map((p, i) => <Project key={p.id} project={p} index={i} />)}
         </div>
+
+        {compact.length > 0 && (
+          <div className="also">
+            <div className="also__head">
+              <span className="eyebrow">More projects</span>
+            </div>
+            <div className="also__grid">
+              {compact.map((p, i) => (
+                <MiniProject key={p.id} project={p} index={FEATURED + i} onOpen={setOpenId} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
+
+      <Modal open={!!open} onClose={close} label={open ? `${open.title} details` : ''}>
+        {open && (
+          <article className="project project--modal">
+            <ProjectContent project={open} index={openIndex} openDetails />
+          </article>
+        )}
+      </Modal>
     </section>
   );
 }
