@@ -25,7 +25,7 @@ const ALL_PROJECTS = [
     title: 'Grape Engine',
     tagline: 'C++17 engine with a custom OpenGL renderer, ECS runtime and CUDA-accelerated simulation.',
     role: 'GPU & tools programmer',
-    year: '2025 — 26',
+    year: 'Sep 2025 — Apr 2026',
     metrics: [
       { value: '500K+', label: 'boids at 60 fps' },
       { value: '100×', label: 'scale-up via GPU neighbour queries' },
@@ -46,7 +46,7 @@ const ALL_PROJECTS = [
     title: 'Echoes Below',
     tagline: 'Underwater puzzle platformer. I wrote every shader, light and post pass.',
     role: 'Graphics & GPU programmer',
-    year: '2025 — 26',
+    year: 'Sep 2025 — Apr 2026',
     metrics: [
       { value: 'PBR', label: 'Cook–Torrance, GGX, Smith' },
       { value: 'HDR', label: 'bloom → tone map → gamma' },
@@ -67,7 +67,7 @@ const ALL_PROJECTS = [
     title: 'Color the Floor',
     tagline: 'Distributed, encrypted real-time multiplayer in C on Cyclone DDS. Key-to-screen latency cut from 156 ms to 1.5 ms.',
     role: 'Networking & security · team of 3',
-    year: '2026',
+    year: 'Sep 2026 — Oct 2026',
     metrics: [
       { value: '1.5 ms', label: 'key → screen, 5 players (was 156 ms)' },
       { value: '32×', label: 'fewer server wake-ups (perf: 863 → 27/s)' },
@@ -89,7 +89,7 @@ const ALL_PROJECTS = [
     title: 'Hakutaku',
     tagline: 'Self-hosted, PlayFab-style game backend: player accounts, player data and an admin dashboard.',
     role: 'Backend · team project',
-    year: '2026 — now',
+    year: 'Sep 2026 — now',
     metrics: [
       { value: '202', label: 'tests, incl. integration on real Postgres' },
       { value: 'Argon2id', label: 'passwords; SHA-256 tokens and keys' },
@@ -116,7 +116,7 @@ const ALL_PROJECTS = [
     title: 'TradeFlow',
     tagline: 'Paper-trading exchange in native C++. Hand-rolled HTTP server, limit order book, SQLite persistence.',
     role: 'Systems & networking',
-    year: '2026',
+    year: 'Mar 2026 — Apr 2026',
     metrics: [
       { value: '8.8×', label: 'order throughput after profiling' },
       { value: '1.9 ms', label: 'p50 order latency, durable commits' },
@@ -142,7 +142,7 @@ const ALL_PROJECTS = [
     title: 'Astral Siege',
     tagline: 'Tower defense where gravity bends every shot.',
     role: 'Systems & gameplay programmer',
-    year: '2025',
+    year: 'Jan 2025 — Apr 2025',
     metrics: [
       { value: 'O(1)', label: 'field lookup per entity' },
       { value: '2D', label: 'discrete vector-field gravity' },
