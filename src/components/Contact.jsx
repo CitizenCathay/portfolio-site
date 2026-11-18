@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { ArrowUpRight, FileText } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { GitHubIcon, LinkedInIcon } from './Icons';
-import { EMAIL, GITHUB, LINKEDIN, RESUME } from '../links';
+import { EMAIL, GITHUB, LINKEDIN } from '../links';
 
 export default function Contact() {
   return (
@@ -22,7 +22,6 @@ export default function Contact() {
           </div>
           <p className="contact__meta">Systems · GPU compute · Graphics · HPC</p>
           <div className="contact__links">
-            <a className="btn btn--primary" href={RESUME}><FileText /> Resume</a>
             <a className="btn" href={GITHUB} target="_blank" rel="noreferrer"><GitHubIcon /> GitHub</a>
             <a className="btn" href={LINKEDIN} target="_blank" rel="noreferrer"><LinkedInIcon /> LinkedIn</a>
           </div>

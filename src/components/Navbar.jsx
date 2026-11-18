@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { RESUME } from '../links';
 
 const LINKS = [
   { label: 'Work', href: '#work' },
@@ -23,7 +22,6 @@ export default function Navbar() {
         <a href="#" className="nav__logo">cmy<span>_</span></a>
         <div className="nav__links">
           {LINKS.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
-          <a className="btn" href={RESUME}>Resume</a>
         </div>
       </div>
     </nav>

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FileText, Mail } from 'lucide-react';
+import { ArrowDown, Mail } from 'lucide-react';
 import { createBoids } from '../sketches/boids';
 import { useSketch } from '../sketches/useSketch';
 import { GitHubIcon, LinkedInIcon } from './Icons';
-import { EMAIL, GITHUB, LINKEDIN, RESUME } from '../links';
+import { EMAIL, GITHUB, LINKEDIN } from '../links';
 
 const rise = (delay) => ({
   initial: { opacity: 0, y: 24 },
@@ -43,7 +43,7 @@ export default function Hero() {
           <strong>GPU &amp; graphics programmer.</strong> Engines, renderers, simulations.
         </motion.p>
         <motion.div className="hero__actions" {...rise(0.4)}>
-          <a className="btn btn--primary" href={RESUME}><FileText /> Resume</a>
+          <a className="btn btn--primary" href="#work"><ArrowDown /> See the work</a>
           <a className="btn btn--icon" href={GITHUB} target="_blank" rel="noreferrer" aria-label="GitHub"><GitHubIcon /></a>
           <a className="btn btn--icon" href={LINKEDIN} target="_blank" rel="noreferrer" aria-label="LinkedIn"><LinkedInIcon /></a>
           <a className="btn btn--icon" href={`mailto:${EMAIL}`} aria-label="Email"><Mail /></a>
