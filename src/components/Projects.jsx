@@ -13,6 +13,8 @@ import tradeflowMarkets from '../assets/projects/tradeflow-markets.jpg';
 import tradeflowPortfolio from '../assets/projects/tradeflow-portfolio.jpg';
 import hakutakuOverview from '../assets/projects/hakutaku-overview.jpg';
 import hakutakuData from '../assets/projects/hakutaku-data.jpg';
+import colorFloor1 from '../assets/projects/colorfloor-1.png';
+import colorFloor2 from '../assets/projects/colorfloor-2.png';
 
 // media.type: 'gallery' | 'video' | 'sketch'
 // To show real footage, swap a project's media for:
@@ -58,6 +60,28 @@ const ALL_PROJECTS = [
       'SDF rendering for resolution-independent UI text and geometry.',
       'SSBO-driven dynamic point light system with smooth distance attenuation.',
       'Multi-stage post-processing pipeline — HDR rendering, bloom, tone mapping, and gamma correction across chained off-screen passes.',
+    ],
+  },
+  {
+    id: 'color-the-floor',
+    title: 'Color the Floor',
+    tagline: 'Distributed, encrypted real-time multiplayer in C on Cyclone DDS. Key-to-screen latency cut from 156 ms to 1.5 ms.',
+    role: 'Networking & security · team of 3',
+    year: '2026',
+    metrics: [
+      { value: '1.5 ms', label: 'key → screen, 5 players (was 156 ms)' },
+      { value: '32×', label: 'fewer server wake-ups (perf: 863 → 27/s)' },
+      { value: 'AES-GCM', label: 'every message; HMAC joins, replay-proof' },
+    ],
+    stack: ['C', 'Cyclone DDS', 'OpenSSL', 'pthreads', 'OpenGL / GLFW', 'perf', 'Wireshark', 'ASan / TSan'],
+    media: { type: 'gallery', images: [colorFloor1, colorFloor2], aspect: '4 / 3' },
+    repo: 'https://github.com/CitizenCathay/CSD3116-Distributed-and-Secure-Simulation',
+    details: [
+      'Made both programs event-driven: DDS waitsets and a condition variable replace 1 ms polling loops, and the server no longer sleeps while holding its lock.',
+      'Publish on change instead of every tick: 1,358 → 584 network messages for the same 5-player test (Wireshark).',
+      'Security: HMAC-SHA256 join tokens over a nonce, AES-256-GCM on every message bound to its type and DDS key, and sequence-number replay protection.',
+      'Cross-machine play over fixed DDS ports with optional peer addresses; clients rejoin by themselves after a server restart.',
+      'A benchmark harness that builds the old and new code side by side, headless integration tests, and 130 unit-test checks; clean under ASan, UBSan and TSan.',
     ],
   },
   {
@@ -138,14 +162,14 @@ const ALL_PROJECTS = [
   },
 ];
 
-function Gallery({ images, title, badge, position = 'center' }) {
+function Gallery({ images, title, badge, position = 'center', aspect }) {
   const [i, setI] = useState(0);
   const [zoom, setZoom] = useState(null); // index shown in the lightbox, or null
   const close = useCallback(() => setZoom(null), []);
   const go = useCallback((k) => { setZoom(k); setI(k); }, []);
   return (
     <div>
-      <div className="project__media">
+      <div className="project__media" style={aspect ? { aspectRatio: aspect } : undefined}>
         <button className="media__zoom" onClick={() => setZoom(i)} aria-label={`Enlarge ${title} screenshot ${i + 1}`}>
           <img src={images[i]} alt={`${title} screenshot ${i + 1}`} loading="lazy" style={{ objectPosition: position }} />
           <span className="media__zoom-hint" aria-hidden="true"><Maximize2 /></span>
@@ -194,7 +218,7 @@ function Media({ project }) {
 }
 
 // Display order: C++ low-latency and systems work first, then backend, then graphics/gameplay.
-const ORDER = ['tradeflow', 'grape-engine', 'hakutaku', 'echoes-below', 'astral-siege'];
+const ORDER = ['tradeflow', 'color-the-floor', 'grape-engine', 'hakutaku', 'echoes-below', 'astral-siege'];
 const PROJECTS = ORDER.map((id) => ALL_PROJECTS.find((p) => p.id === id));
 
 const reveal = {
