@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, ChevronDown, Play } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Maximize2, Play } from 'lucide-react';
 import { GitHubIcon } from './Icons';
+import Lightbox from './Lightbox';
 import { useSketch } from '../sketches/useSketch';
 import { createUnderwater } from '../sketches/underwater';
 import { createGravity } from '../sketches/gravity';
@@ -139,12 +140,19 @@ const ALL_PROJECTS = [
 
 function Gallery({ images, title, badge, position = 'center' }) {
   const [i, setI] = useState(0);
+  const [zoom, setZoom] = useState(null); // index shown in the lightbox, or null
+  const close = useCallback(() => setZoom(null), []);
+  const go = useCallback((k) => { setZoom(k); setI(k); }, []);
   return (
     <div>
       <div className="project__media">
-        <img src={images[i]} alt={`${title} screenshot ${i + 1}`} loading="lazy" style={{ objectPosition: position }} />
+        <button className="media__zoom" onClick={() => setZoom(i)} aria-label={`Enlarge ${title} screenshot ${i + 1}`}>
+          <img src={images[i]} alt={`${title} screenshot ${i + 1}`} loading="lazy" style={{ objectPosition: position }} />
+          <span className="media__zoom-hint" aria-hidden="true"><Maximize2 /></span>
+        </button>
         {badge && <span className="chip media__badge">{badge}</span>}
       </div>
+      <Lightbox images={images} index={zoom} title={title} onClose={close} onIndex={go} />
       {images.length > 1 && (
         <div className="gallery__thumbs">
           {images.map((src, k) => (
