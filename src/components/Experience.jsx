@@ -9,7 +9,7 @@ const TIMELINE = [
     date: 'May 2027 —',
     title: 'Internship',
     org: 'Open to offers',
-    summary: 'Available May 2027 – Apr 2028 for systems, GPU compute, graphics or HPC work.',
+    summary: 'Available May 2027 – Apr 2028 for C++ systems, low-latency, GPU compute or HPC work.',
     cta: { label: 'Get in touch', href: '#contact' },
   },
   {

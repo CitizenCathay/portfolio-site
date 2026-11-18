@@ -20,7 +20,7 @@ export default function Contact() {
               {EMAIL} <ArrowUpRight />
             </a>
           </div>
-          <p className="contact__meta">Systems · GPU compute · Graphics · HPC</p>
+          <p className="contact__meta">C++ systems · Low-latency · GPU compute · HPC</p>
           <div className="contact__links">
             <a className="btn" href={GITHUB} target="_blank" rel="noreferrer"><GitHubIcon /> GitHub</a>
             <a className="btn" href={LINKEDIN} target="_blank" rel="noreferrer"><LinkedInIcon /> LinkedIn</a>

@@ -16,7 +16,7 @@ import hakutakuData from '../assets/projects/hakutaku-data.jpg';
 // media.type: 'gallery' | 'video' | 'sketch'
 // To show real footage, swap a project's media for:
 //   { type: 'video', src: clip, poster: still }   (import the .mp4/.webm like the images)
-const PROJECTS = [
+const ALL_PROJECTS = [
   {
     id: 'grape-engine',
     title: 'Grape Engine',
@@ -184,6 +184,10 @@ function Media({ project }) {
     </div>
   );
 }
+
+// Display order: C++ low-latency and systems work first, then backend, then graphics/gameplay.
+const ORDER = ['tradeflow', 'grape-engine', 'hakutaku', 'echoes-below', 'astral-siege'];
+const PROJECTS = ORDER.map((id) => ALL_PROJECTS.find((p) => p.id === id));
 
 const reveal = {
   initial: { opacity: 0, y: 40 },

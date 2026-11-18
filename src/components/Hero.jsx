@@ -40,7 +40,7 @@ export default function Hero() {
         </motion.div>
         <motion.h1 {...rise(0.2)}>Choi Meng Yew</motion.h1>
         <motion.p className="hero__role" {...rise(0.3)}>
-          <strong>GPU &amp; graphics programmer.</strong> Engines, renderers, simulations.
+          <strong>C++ systems programmer.</strong> Low-latency servers, engines and GPU compute.
         </motion.p>
         <motion.div className="hero__actions" {...rise(0.4)}>
           <a className="btn btn--primary" href="#experience"><ArrowDown /> See my work</a>
