@@ -581,6 +581,15 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; line-height: 1.02; }
 }
 .contact__mail:hover { background-size: 100% 2px; }
 .contact__mail svg { width: 0.7em; height: 0.7em; color: var(--accent); flex: none; }
+.contact__mailrow {
+  display: flex; align-items: center; flex-wrap: wrap;
+  column-gap: 20px; row-gap: 4px;
+  margin: 20px 0 28px;
+}
+.contact__mailrow .contact__mail { margin: 0; }
+.contact__copy { flex: none; }
+.contact__copy--copied { border-color: var(--accent); color: var(--accent); background: rgba(94, 234, 212, 0.08); }
+.contact__copy--copied:hover { border-color: var(--accent); background: rgba(94, 234, 212, 0.12); }
 .contact__meta { color: var(--text-muted); margin-bottom: 32px; }
 .contact__links { display: flex; flex-wrap: wrap; gap: 10px; }
 
