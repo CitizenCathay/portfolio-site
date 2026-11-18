@@ -10,6 +10,8 @@ import grapeEngine2 from '../assets/projects/grape-engine-2.jpg';
 import tradeflowTrade from '../assets/projects/tradeflow-trade.jpg';
 import tradeflowMarkets from '../assets/projects/tradeflow-markets.jpg';
 import tradeflowPortfolio from '../assets/projects/tradeflow-portfolio.jpg';
+import hakutakuOverview from '../assets/projects/hakutaku-overview.jpg';
+import hakutakuData from '../assets/projects/hakutaku-data.jpg';
 
 // media.type: 'gallery' | 'video' | 'sketch'
 // To show real footage, swap a project's media for:
@@ -55,6 +57,33 @@ const PROJECTS = [
       'SDF rendering for resolution-independent UI text and geometry.',
       'SSBO-driven dynamic point light system with smooth distance attenuation.',
       'Multi-stage post-processing pipeline — HDR rendering, bloom, tone mapping, and gamma correction across chained off-screen passes.',
+    ],
+  },
+  {
+    id: 'hakutaku',
+    title: 'Hakutaku',
+    tagline: 'Self-hosted, PlayFab-style game backend: player accounts, player data and an admin dashboard.',
+    role: 'Backend · team project',
+    year: '2026 — now',
+    metrics: [
+      { value: '202', label: 'tests, incl. integration on real Postgres' },
+      { value: 'Argon2id', label: 'passwords; SHA-256 tokens and keys' },
+      { value: 'CI/CD', label: 'Jenkins deploy + smoke test per merge' },
+    ],
+    stack: ['C# / .NET 10', 'ASP.NET Core', 'PostgreSQL', 'EF Core', 'Vue 3 + TS', 'Docker', 'Caddy', 'Jenkins'],
+    media: {
+      type: 'gallery',
+      images: [hakutakuOverview, hakutakuData],
+      position: 'left top',
+    },
+    repo: 'https://github.com/Bamboo01/Hakutaku',
+    details: [
+      'Built most of the server: guest device sign-in, email linking with verification and password reset by code, and admin cookie sessions with idle and absolute expiry.',
+      'Three tiers of per-player data (client-writable, read-only, internal) with strict limits and transactional writes, editable from a PlayFab-style admin editor.',
+      'Server keys let game servers validate player sessions and read or write their data; keys are hashed, revocable and owner-only.',
+      'Abuse limits: per-IP rate limits, 5 email codes a day per account, Gmail-alias dedupe and capped display-name changes.',
+      '202 unit and integration tests, plus a simulator that drives mock players through the C# SDK the Unity plugin uses.',
+      'Ships as one Docker image behind a default-deny Caddy proxy; Jenkins deploys and smoke-tests every merge.',
     ],
   },
   {
