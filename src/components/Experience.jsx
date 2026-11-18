@@ -13,8 +13,8 @@ const TIMELINE = [
     cta: { label: 'Get in touch', href: '#contact' },
   },
   {
-    status: 'now',
-    date: 'Jan 2025 — now',
+    status: 'past',
+    date: 'Sep 2025 — Apr 2026',
     title: 'Teaching Assistant',
     org: 'DigiPen Institute of Technology Singapore',
     tags: ['High Level Programming I & II', 'Software Engineering Project I & II', 'Computer Environment'],
@@ -25,10 +25,10 @@ const TIMELINE = [
     ],
   },
   {
-    status: 'past',
+    status: 'now',
     date: 'In progress',
-    title: 'BSc Computer Science',
-    org: 'SIT – DigiPen · Real-Time Interactive Simulation',
+    title: 'BS in Computer Science in Real-Time Interactive Simulation',
+    org: 'SIT – DigiPen Institute of Technology Singapore',
     tags: ['Algorithms', 'Physics simulation', 'AI systems', 'Software architecture'],
   },
 ];
