@@ -8,9 +8,13 @@ const reveal = {
   transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
 };
 
-const CORE = ['C++', 'C', 'CUDA', 'OpenGL / GLSL', 'OpenCL', 'TCP/UDP networking'];
-const TOOLS = ['RenderDoc', 'ImGui', 'CMake', 'Git', 'Visual Studio', 'Linux'];
-const ALSO = ['Python', 'PyTorch', 'TypeScript', 'React', 'Three.js', 'WebGL', 'WebGPU'];
+// Built from what the projects actually use, systems / C++ first
+const ROWS = [
+  { key: 'Languages', items: ['C++17/20', 'C', 'CUDA', 'C#', 'Python', 'TypeScript'] },
+  { key: 'Systems', items: ['Multithreading', 'TCP/UDP networking', 'Winsock', 'Cyclone DDS', 'OpenSSL', 'SQLite', 'PostgreSQL', 'OpenGL / GLSL', 'OpenCL'] },
+  { key: 'Tools', items: ['perf', 'Wireshark', 'ASan / UBSan / TSan', 'RenderDoc', 'CMake', 'vcpkg', 'Docker', 'Git', 'Visual Studio', 'Linux'] },
+  { key: 'Also', items: ['ASP.NET Core', 'Jenkins', 'PyTorch', 'Vue', 'React', 'Three.js', 'WebGL', 'WebGPU', 'ImGui'], dim: true },
+];
 
 export default function About() {
   return (
@@ -34,18 +38,14 @@ export default function About() {
             </p>
 
             <div className="rows">
-              <div className="row">
-                <div className="row__key">Core</div>
-                <div className="row__val tools">{CORE.map((t) => <span className="chip" key={t}>{t}</span>)}</div>
-              </div>
-              <div className="row">
-                <div className="row__key">Tools</div>
-                <div className="row__val tools">{TOOLS.map((t) => <span className="chip" key={t}>{t}</span>)}</div>
-              </div>
-              <div className="row">
-                <div className="row__key">Also</div>
-                <div className="row__val tools tools--dim">{ALSO.map((t) => <span className="chip" key={t}>{t}</span>)}</div>
-              </div>
+              {ROWS.map((row) => (
+                <div className="row" key={row.key}>
+                  <div className="row__key">{row.key}</div>
+                  <div className={`row__val tools${row.dim ? ' tools--dim' : ''}`}>
+                    {row.items.map((t) => <span className="chip" key={t}>{t}</span>)}
+                  </div>
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>
