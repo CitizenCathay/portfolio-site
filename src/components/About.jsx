@@ -34,20 +34,6 @@ export default function About() {
 
             <div className="rows">
               <div className="row">
-                <div className="row__key">Now</div>
-                <div className="row__val">
-                  Teaching Assistant, DigiPen
-                  <small>Since Jan 2025 · High Level Programming I &amp; II, Software Engineering Project I &amp; II, Computer Environment</small>
-                </div>
-              </div>
-              <div className="row">
-                <div className="row__key">Study</div>
-                <div className="row__val">
-                  BSc Computer Science, Real-Time Interactive Simulation
-                  <small>SIT – DigiPen Institute of Technology Singapore</small>
-                </div>
-              </div>
-              <div className="row">
                 <div className="row__key">Core</div>
                 <div className="row__val tools">{CORE.map((t) => <span className="chip" key={t}>{t}</span>)}</div>
               </div>

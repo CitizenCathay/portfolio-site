@@ -113,9 +113,7 @@ function Gallery({ images, title, badge, position = 'center' }) {
   return (
     <div>
       <div className="project__media">
-        <a href={images[i]} target="_blank" rel="noreferrer" aria-label={`Open ${title} screenshot full size`}>
-          <img src={images[i]} alt={`${title} screenshot ${i + 1}`} loading="lazy" style={{ objectPosition: position }} />
-        </a>
+        <img src={images[i]} alt={`${title} screenshot ${i + 1}`} loading="lazy" style={{ objectPosition: position }} />
         {badge && <span className="chip media__badge">{badge}</span>}
       </div>
       {images.length > 1 && (
@@ -208,10 +206,10 @@ function Project({ project, index }) {
 
 export default function Projects() {
   return (
-    <section id="work" className="section">
+    <section id="projects" className="section">
       <div className="container">
         <div className="section__head">
-          <h2>Work</h2>
+          <h2>Projects</h2>
           <span className="eyebrow">{String(PROJECTS.length).padStart(2, '0')} projects</span>
         </div>
         <div className="projects">

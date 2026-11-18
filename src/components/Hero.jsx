@@ -43,7 +43,7 @@ export default function Hero() {
           <strong>GPU &amp; graphics programmer.</strong> Engines, renderers, simulations.
         </motion.p>
         <motion.div className="hero__actions" {...rise(0.4)}>
-          <a className="btn btn--primary" href="#work"><ArrowDown /> See the work</a>
+          <a className="btn btn--primary" href="#projects"><ArrowDown /> See projects</a>
           <a className="btn btn--icon" href={GITHUB} target="_blank" rel="noreferrer" aria-label="GitHub"><GitHubIcon /></a>
           <a className="btn btn--icon" href={LINKEDIN} target="_blank" rel="noreferrer" aria-label="LinkedIn"><LinkedInIcon /></a>
           <a className="btn btn--icon" href={`mailto:${EMAIL}`} aria-label="Email"><Mail /></a>
