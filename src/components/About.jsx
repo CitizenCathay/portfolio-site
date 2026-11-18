@@ -28,8 +28,9 @@ export default function About() {
 
           <motion.div {...reveal} transition={{ ...reveal.transition, delay: 0.1 }}>
             <p className="about__lede">
-              CS student at DigiPen Singapore. I build things from scratch to understand them,
-              usually <em>close to the metal</em>. Off-screen I scuba dive, which explains the fish.
+              I&rsquo;m a CS student at DigiPen Singapore who loves C++ and <em>systems programming</em>.
+              Most of my projects are low-level, from game engines to trading systems, and I want to
+              keep building software where speed matters.
             </p>
 
             <div className="rows">
