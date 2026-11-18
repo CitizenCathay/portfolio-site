@@ -29,13 +29,22 @@ const TIMELINE = [
     date: 'In progress',
     title: 'BS in Computer Science in Real-Time Interactive Simulation',
     org: 'SIT – DigiPen Institute of Technology Singapore',
-    tags: ['Algorithms', 'Physics simulation', 'AI systems', 'Software architecture'],
+    // Official module names, picked for systems / C++ / quant roles
+    tags: [
+      'Low Level Programming', 'Operating Systems', 'Computer Networks', 'Modern C++ Design Patterns',
+      'Data Structures', 'Algorithm Analysis', 'Programming Massively Parallel Processors',
+      'Probability and Statistics', 'Linear Algebra',
+    ],
   },
   {
     status: 'past',
     date: 'Apr 2020 — May 2024',
     title: 'Diploma in Electrical Engineering',
     org: 'Ngee Ann Polytechnic',
+    tags: [
+      'Programming', 'Digital Fundamentals', 'Microcontroller & System', 'PLC & System Integration',
+      'Data Analysis & Visualisation', 'Engineering Mathematics',
+    ],
   },
 ];
 

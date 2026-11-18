@@ -492,7 +492,7 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; line-height: 1.02; }
 .tl__org { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
 .tl__summary { color: var(--text-muted); font-size: 15px; margin-top: 12px; max-width: 560px; }
 .tl__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-.tl__tags .chip { color: var(--text); }
+.tl__tags .chip { color: var(--text); max-width: 100%; white-space: normal; line-height: 1.4; }
 .tl__points { list-style: none; display: grid; gap: 8px; margin-top: 16px; }
 .tl__points li {
   position: relative; padding-left: 18px;
