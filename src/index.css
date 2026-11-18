@@ -455,6 +455,11 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; line-height: 1.02; }
   font-variant-numeric: tabular-nums;
 }
 .tl__item--now .tl__date { color: var(--accent); }
+.tl__date-note {
+  display: block; margin-top: 2px;
+  font-size: 11px; color: var(--text-dim);
+  letter-spacing: 0.04em;
+}
 
 .tl__node { grid-area: node; display: flex; justify-content: center; padding-top: 24px; position: relative; z-index: 1; }
 .tl__dot {
@@ -512,6 +517,9 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; line-height: 1.02; }
     grid-template-areas: 'node date' 'node card';
   }
   .tl__date { text-align: left; padding: 0 0 8px 12px; }
+  .tl__date-note { display: inline; margin: 0 0 0 8px; }
+  .tl__date-note::before { content: '('; }
+  .tl__date-note::after { content: ')'; }
   .tl__node { padding-top: 2px; }
   .tl__card { margin-left: 12px; padding: 18px 18px 20px; }
   .tl__card::before { display: none; }

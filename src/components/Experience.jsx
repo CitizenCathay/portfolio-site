@@ -26,7 +26,8 @@ const TIMELINE = [
   },
   {
     status: 'now',
-    date: 'In progress',
+    date: 'Sep 2024 — May 2028',
+    dateNote: 'expected',
     title: 'BS in Computer Science in Real-Time Interactive Simulation',
     org: 'SIT – DigiPen Institute of Technology Singapore',
     // Official module names, picked for systems / C++ / quant roles
@@ -59,7 +60,10 @@ function Item({ item, index }) {
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.7, delay: index * 0.05, ease }}
     >
-      <div className="tl__date">{item.date}</div>
+      <div className="tl__date">
+        {item.date}
+        {item.dateNote && <span className="tl__date-note">{item.dateNote}</span>}
+      </div>
       <div className="tl__node" aria-hidden="true"><span className="tl__dot" /></div>
       <div className="tl__card">
         <h3 className="tl__title">{item.title}</h3>
